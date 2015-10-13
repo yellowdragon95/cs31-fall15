@@ -1,58 +1,80 @@
+
 #include <iostream>
+using namespace std;
 #include <string>
 #include <iomanip>
-using namespace std;   
 
-double royaltyCalc(int n, double base, char a)
+
+double royaltyCalc(double n, double base, char a)
 
 {
 	if (n >= 0 && n <= 400)
 		return n*base*(0.09);
-	
-	
-	else if (n > 400 && n <= 1200)
+
+
+	if (n > 400 && n <= 1200)
 	{
 		if (a == 'y')
 			return 400 * base*(0.09) + (n - 400)*base*(0.16);
-		else if (a == 'n')
+		if (a == 'n')
 			return 400 * base*(0.09) + (n - 400)*base*(0.13);
 	}
-	
-	else if (n > 1200)
 
+	if (n > 1200)
 	{
 		if (a == 'y')
-			return 400 * base*(0.09) + (n - 400)*base*(0.16) + (n - 1200)*base*(0.14);
-		else if (a == 'n')
-			return 400 * base*(0.09) + (n - 400)*base*(0.13) + (n - 1200)*base*(0.14);
+			return 400 * base*(0.09) + (800)*base*(0.16) + (n - 1200)*base*(0.14);
+		if (a == 'n')
+			return 400 * base*(0.09) + (8A00)*base*(0.13) + (n - 1200)*base*(0.14);
 	}
-		}
+}
 
-void main()
+int main()
 {
-	int numUnits;
-	double bPrice;
+	double numUnits;
+	int bPrice;
 	std::string mTitle;
 	char premium;
 
 	cout << "Units sent: ";
 	cin >> numUnits;
-	cout << "\nTitle: ";
-	getline(cin, mTitle);
-	cout << "\nBase Price: ";
+	cout << "Title: ";
+	cin.ignore(10987, '\n');
+	std::getline(cin, mTitle);
+	cout << "Base Price: ";
 	cin >> bPrice;
-	cout << "\nPremium item? (y/n): ";
-	cin >> premium;
+	cout << "Premium item? (y/n): ";
+	cin>>premium;
+    
+    double calcBprice = (double)bPrice;
+    
+	cout << "---\n";
 
-	cout << "\n---";
 	if (numUnits < 0)
-		cout << "\nThe number of units sent must be nonnegative.";
-	else if (mTitle.length == 0)
-		cout << "\nYou must enter a title.";
-	else if (bPrice < 0)
-		cout << "\nThe base price must be nonnegative.";
-	else if (premium != 'y' || premium != 'n')
-		cout << "\nYou must enter y or n.";
-	else cout << mTitle << " earned $" << setprecision(3) << fixed << royaltyCalc(numUnits, bPrice, premium) << " in royalties.";
-	
+	{
+	    cout << "The number of units sent must be nonnegative.";
+		return 1;
+	}
+	if (mTitle == "")
+	{
+		cout << "You must enter a title.";
+		return 1;
+	}
+
+	if (bPrice < 0)
+	{
+		cout << "The base price must be nonnegative.";
+		return 1;
+	}
+	if ((premium != 'y') && (premium != 'n'))
+	{
+		cout << "You must enter y or n.";
+		return 1;
+	}
+
+	else {
+		cout << mTitle << " earned $" << setprecision(2) << fixed << royaltyCalc(numUnits, bPrice, premium) << " in royalties.";
+		return 0;
+	}
 }
+
